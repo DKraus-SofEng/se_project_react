@@ -88,7 +88,6 @@
 .modal__radio-btn {
     margin-right: 8px;
     accent-color: rgba(0, 0, 0, 1);
-
 }
 
 /* Specific form styles */
@@ -121,7 +120,7 @@
 }
 
 .modal__submit-btn:hover {
-    rgba(255, 255, 255, 1);
+    background-color: (255, 255, 255, 1);
 }
 
 .modal__submit-btn_disabled {
