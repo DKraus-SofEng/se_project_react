@@ -1,0 +1,31 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    max-width: 1360px;
+    height: 40px;
+    font-size: 20px;
+    align-items: center;
+}
+
+.header__logo {
+    margin-right: 24px;
+}
+
+.header__add-clothes-btn {
+    margin-left: auto;
+    margin-right: 20px;
+    background-color: transparent;
+    border: none;
+    height: 40px;
+    padding: 0;
+    font-size: 20px;
+}
+
+.header__userName {
+    margin-right: 12px;
+}
+
+.header__avatar {
+    width: 40px;
+    height: 40px;
+}
