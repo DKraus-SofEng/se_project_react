@@ -1,5 +1,6 @@
 import "../App/ItemModal/ItemModal.css";
 import closeIcon from "../../assets/close-icon.svg";
+import "./ModalWithForm.css";
 
 function ModalWithForm({
     isOpen,
