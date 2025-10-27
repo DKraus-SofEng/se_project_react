@@ -1,9 +1,13 @@
 .header {
     display: flex;
-    flex-direction: row;
     max-width: 1360px;
     height: 40px;
     font-size: 20px;
+    justify-content: space-between;
+}
+
+.header__side {
+    display: flex;
     align-items: center;
 }
 
@@ -12,8 +16,7 @@
 }
 
 .header__add-clothes-btn {
-    margin-left: auto;
-    margin-right: 20px;
+    margin: 0 20px;
     background-color: transparent;
     border: none;
     height: 40px;

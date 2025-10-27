@@ -70,6 +70,11 @@
 
 .modal__label {
     margin-bottom: 8px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.modal__radio-btn:checked + .modal__label {
+    color: rgba(0, 0, 0, 1);
 }
 
 .modal__input {

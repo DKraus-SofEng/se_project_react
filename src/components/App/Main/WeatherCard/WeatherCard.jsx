@@ -1,13 +1,40 @@
-import cloudy from "../../../../assets/cloudy.svg";
+import { useCurrentTemperatureUnit } from "../../../../contexts/CurrentTemperatureUnitContext";
 import "./WeatherCard.css";
+import { weatherConditionImages } from "../../../../utils/constants";
 
-function WeatherCard() {
-  return (
-    <section className="weather-card">
-      <img className="weather-card__image" src={cloudy} alt="cloud image" />
-      <p className="weather-card__temp">75 &deg;F</p>
-    </section>
-  );
+function WeatherCard({ weatherData }) {
+    const { currentTempUnit = "F" } = useCurrentTemperatureUnit();
+
+    const timeOfDay =
+        weatherData?.timeOfDay ?? (weatherData?.isDay ? "day" : "night");
+    const condition = (
+        weatherData?.weatherCondition ?? "default"
+    ).toLowerCase();
+
+    const weatherCardImage =
+        weatherConditionImages?.[timeOfDay] &&
+        weatherConditionImages[timeOfDay][condition]
+            ? weatherConditionImages[timeOfDay][condition]
+            : weatherConditionImages?.[timeOfDay]?.default ??
+              weatherConditionImages.day.default;
+
+    const temp =
+        typeof weatherData?.temp === "object"
+            ? weatherData.temp[currentTempUnit] ?? weatherData.temp.F
+            : weatherData?.temp ?? 0;
+
+    return (
+        <section className="weather-card">
+            <img
+                className="weather-card__image"
+                src={weatherCardImage.image}
+                alt={weatherCardImage.alt}
+            />
+            <p className="weather-card__temp">
+                {temp}&deg; {currentTempUnit}
+            </p>
+        </section>
+    );
 }
 
 export default WeatherCard;
