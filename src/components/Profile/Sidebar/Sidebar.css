@@ -1,0 +1,26 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    min-width: 229px;
+    align-items: center;
+    margin-top: 47px;
+}
+
+.sidebar__row {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 16px;
+    height: 56px;
+    padding: 0;
+}
+
+.sidebar__userName {
+    font-size: 20px;
+}
+
+.sidebar__avatar {
+    width: 56px;
+    height: 56px;
+    align-self: center;
+}

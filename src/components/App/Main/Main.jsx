@@ -11,7 +11,11 @@ function Main({
     weatherData,
     getWeatherCondition,
 }) {
-    const weatherCondition = getWeatherCondition(weatherData.temp);
+    const { currentTempUnit = "F" } = useCurrentTemperatureUnit();
+    const tempToShow =
+        weatherData?.temp?.[currentTempUnit] ?? weatherData?.temp ?? "0";
+
+    const weatherCondition = getWeatherCondition(weatherData.temp.F);
 
     const itemsToShow = useMemo(() => {
         if (!weatherCondition) return clothingItems;
@@ -21,10 +25,6 @@ function Main({
                 weatherCondition.toLowerCase()
         );
     }, [clothingItems, weatherCondition]);
-
-    const { currentTempUnit = "F" } = useCurrentTemperatureUnit();
-    const tempToShow =
-        weatherData?.temp?.[currentTempUnit] ?? weatherData?.temp ?? "0";
 
     return (
         <main className="main">
@@ -37,7 +37,7 @@ function Main({
                 {itemsToShow.map((item) => (
                     <ItemCard
                         key={item._id}
-                        data={item}
+                        clothingItem={item}
                         onCardClick={handleOpenItemModal}
                     />
                 ))}

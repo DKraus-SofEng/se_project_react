@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import logo from "../../../assets/logo.svg";
 import avatar from "../../../assets/avatar.png";
 import "./Header.css";
@@ -14,7 +15,13 @@ function Header({ handleOpenAddGarmentModal, weatherData }) {
         <>
             <header className="header">
                 <div className="header__side">
-                    <img className="header__logo" src={logo} alt="wtwr logo" />
+                    <Link to="/">
+                        <img
+                            className="header__logo"
+                            src={logo}
+                            alt="wtwr logo"
+                        />
+                    </Link>
                     <p className="header__location">
                         <time className="header__dateTime" dateTime={now}>
                             {dateStr}
@@ -30,12 +37,14 @@ function Header({ handleOpenAddGarmentModal, weatherData }) {
                     >
                         + Add clothes
                     </button>
-                    <p className="header__userName">Terrence Tegegne</p>
-                    <img
-                        className="header__avatar"
-                        src={avatar}
-                        alt="Terrence Tegegne's avatar"
-                    />
+                    <Link className="header__profile-link" to="/profile">
+                        <p className="header__userName">Terrence Tegegne</p>
+                        <img
+                            className="header__avatar"
+                            src={avatar}
+                            alt="Terrence Tegegne's avatar"
+                        />
+                    </Link>
                 </div>
             </header>
         </>

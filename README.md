@@ -1,85 +1,74 @@
-# Weather Wardrobe (se_project_react)
+# Tripleten Software Engineering Program: Project React
 
-A small React + Vite app that recommends clothing based on current weather. Fetches current weather from OpenWeather, normalizes it, and shows matching clothing cards.
+## WTWR (se_project_react)
+
+This is the React.js project of the fulltime Software Engineering program at TripleTen. It is a small React + Vite app that recommends clothing based on current weather temperature of the chosen location.
+
+Fetches current weather from OpenWeather, normalizes it, and shows matching clothing cards.
+
+## Core Technologies
+
+- React 18 (with functional components and hooks)
+- JavaScript (ES6+)
+- CSS3 (with BEM methodology)
+- HTML5
+- BEM Methodology
+
+## Libraries/Tools
+
+- React Router DOM (for navigation between pages)
+- Vite (build tool and dev server)
+- React Context API (for temperature unit state management)
+
+## APIs/Backend
+
+- OpenWeather API (for real-time weather data)
+- json-server (for mock backend/database)
 
 ## Features
 
-- Fetches current weather from OpenWeather (see `src/utils/weatherApi.js`)
+- Fetches current weather from OpenWeather
 - Normalizes temperature (F/C) and day/night
-- Weather icon and alt text selected from `src/utils/constants.js`
 - Clothing cards filtered by weather type (hot/warm/cold)
 - Temperature unit controlled via a context and a toggle switch
 - Modal form for user to add their own clothing items
 
-## Quick start (Windows / bash)
+## Known Issues
 
-1. Install dependencies
+### Close Button Visibility
 
-   npm install
+**Issue**:
+the white close button icon becomes invisible on clothing items with white/light backgrounds
 
-2. Start dev server
+**Impact**:
+users may have difficulty closing the modal when viewing light-colored items
 
-   npm run dev
+**Recommended Solutions**:
 
-3. Open in the browser (Vite will show the local URL in terminal)
+- Use a dark close icon (black or dark gray)
+- Add a semi-transparent background to the close button
+- Consider using an icon with both light and dark elements (e.g. a shadow)
 
-4. Build for production
+### Clothing Weather Options
 
-   npm run build
+**Issue**: there are only three options for clothing based solely on the weather temperature.
 
-5. Preview the production build
+**Impact**: user may not choose appropriate clothing for the weather conditions based on three temperature-related conditions only.
 
-   npm run preview
+**Recommended Solutions**:
 
-## Project structure (important files)
+- To truly make the app functional, many more weather conditions, such as rain, wind, and snow would need to be added along with suggested items beyond clothing, such as an umbrella or sunscreen.
 
-- `src/components/App/App.jsx` — top-level app, fetches weather, provides context
-- `src/components/App/Main/Main.jsx` — main page, renders `WeatherCard` and filtered `ItemCard`s
-- `src/components/App/Main/WeatherCard/WeatherCard.jsx` — displays icon + temperature
-- `src/components/App/ToggleSwitch/ToggleSwitch.css` — toggle styles
-- `src/utils/weatherApi.js` — fetch + parse weather data (returns temp object with F/C, timeOfDay, weatherCondition)
-- `src/utils/constants.js` — image map and other constants
-- `src/utils/ClothingItems.js` — default clothing items and their `weather` tag
-- `src/contexts/CurrentTemperatureUnitContext.js` — temperature unit provider and hook
+## Links
 
-## Configuration
+**Figma**
 
-- API and defaults are located in `src/utils/constants.js` and `src/utils/weatherApi.js`. If you need to change API keys or coordinates, edit those files.
+Project is linked to Figma at https://www.figma.com/design/dQLJwEKasIdspciJAJrCaf/Sprint-11_-WTWR?node-id=311-433&p=f&t=THYrkQA0UVHRJ4py-0.
 
-## How filtering works
+**GitHub**
 
-- The main page computes a weather type (hot/warm/cold) from the API temperature and filters `defaultClothingItems` by the item's `weather` property or any numeric min/max if present.
-- Thresholds are defined in the app (Fahrenheit by default in `App.jsx`) — if you want one canonical source of thresholds, create a small util and import it in both places.
+Link to deployed project on GitHub Pages: https://DKraus-SofEng.github.io/se_project_spots/index.html. _Please note: the complete project has not yet been deployed._
 
-## Styling / interactions
+**Project Pitch Video**
 
-- The toggle uses CSS transitions on transform for smooth animation. See `src/components/App/ToggleSwitch/ToggleSwitch.css` if you want to adjust timing or hover behavior.
-- Radio labels in the add-garment modal change color when the radio is checked via CSS adjacent-sibling selectors in `src/components/App/ItemModal/ItemModal.css`.
-
-## Troubleshooting
-
-- If CSS changes don't appear, save the file and hard-refresh the browser (Ctrl+F5) or restart the dev server.
-- Verify the DOM order for sibling selectors (`+` requires immediate sibling). Use DevTools to inspect which CSS rule is active.
-- If the weather icons don't appear, check `src/utils/constants.js` keys and the normalized `weatherCondition` returned by `weatherApi.js`.
-
-## Tests & linting
-
-- If you have ESLint or tests configured, run:
-
-  npm run lint
-  npm test
-
-(If those scripts are missing, add them to `package.json`.)
-
-## Contributing
-
-- Keep UI changes isolated to components and prefer transform-based animations for performance.
-- Centralize unit/threshold logic in a small util so App and Main use the same rules.
-
-## License
-
-This repository is for learning and demonstration purposes.
-
-## Demo
-
-Live demo: https://DKraus-SofEng.github.io/se_project_react/index.html
+You can find the project pitch video at: https://www.loom.com/share/c322926d4fff4ba684481389b3af9d2a

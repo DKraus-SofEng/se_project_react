@@ -1,15 +1,15 @@
 import "./ItemCard.css";
 
-function ItemCard({ data, onCardClick }) {
+function ItemCard({ clothingItem, onCardClick }) {
     function handleOpenCard() {
-        onCardClick(data);
+        onCardClick(clothingItem);
     }
     return (
         <li className="card">
-            <h2 className="card__title">{data.name}</h2>
+            <h2 className="card__title">{clothingItem.name}</h2>
             <img
-                src={data.link}
-                alt={data.name}
+                src={clothingItem.imageUrl}
+                alt={clothingItem.name}
                 className="card__image"
                 onClick={handleOpenCard}
             />

@@ -1,17 +1,18 @@
+/* ===== MODAL OVERLAY ===== */
 .modal {
-    align-items: center;
-    justify-content: center;
     position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
     display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 0 10px;
+    background-color: rgba(0, 0, 0, 0.5);
     visibility: hidden;
     opacity: 0;
-    transition: visibility 0s linear 0.5s opacity 0.5s linear;
-    background-color: rgba(0, 0, 0, 0.5);
+    transition: visibility 0s linear 0.5s, opacity 0.5s linear;
 }
 
 .modal_is-opened {
@@ -20,10 +21,9 @@
     transition-delay: 0s;
 }
 
+/* ===== ITEM MODAL CONTAINER ===== */
 .modal__container {
     position: relative;
-    border-radius: 16px;
-    overflow: hidden;
     max-width: 498px;
     max-height: 610px;
     border-radius: 16px;
@@ -33,16 +33,19 @@
 
 .modal__image {
     display: block;
+    width: 100%;
+    height: 498px;
+    object-fit: contain;
 }
 
 .modal__close-btn {
     position: absolute;
     top: 24px;
     right: 24px;
+    width: 20px;
+    height: 20px;
     border: none;
     background-color: transparent;
-    height: 20px;
-    width: 20px;
 }
 
 .modal__footer {
@@ -51,55 +54,28 @@
     gap: 12px;
     padding: 20px 32px 32px;
 }
+
+.modal__footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .modal__text {
     font-size: 20px;
     margin: 0;
 }
 
-.modal__fieldset {
+.modal__delete-btn {
+    color: rgba(255, 77, 0, 1);
+    font-size: 20px;
     border: none;
-    margin: 0;
-    padding: 0;
+    background-color: transparent;
 }
 
-.modal__fieldset_type_radio {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.modal__label {
-    margin-bottom: 8px;
-    color: rgba(0, 0, 0, 0.5);
-}
-
-.modal__radio-btn:checked + .modal__label {
-    color: rgba(0, 0, 0, 1);
-}
-
-.modal__input {
-    display: block;
-    border: none;
-    width: 100%;
-    color: rgba(0, 0, 0, 0.5);
-    border-bottom: 1px solid rgba(0, 0, 0, 1);
-    margin-bottom: 24px;
-}
-
-.modal__legend {
-    margin-bottom: 12px;
-}
-
-.modal__radio-btn {
-    margin-right: 8px;
-    accent-color: rgba(0, 0, 0, 1);
-}
-
-/* Specific form styles */
-
+/* ===== FORM MODAL CONTAINER ===== */
 .modal__container_type_form {
     max-width: 496px;
-
     width: 100%;
     padding: 28px 28px 36px;
     border: 1px solid rgba(0, 0, 0, 0.3);
@@ -115,17 +91,66 @@
     font-size: 16px;
     margin: 0 0 24px;
 }
+
+/* ===== FORM ELEMENTS ===== */
+
+.modal__fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.modal__fieldset_type_radio {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.modal__legend {
+    margin-bottom: 12px;
+}
+
+.modal__label {
+    margin-bottom: 8px;
+    color: rgba(0, 0, 0, 1);
+}
+
+.modal__input {
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 1);
+    margin-bottom: 24px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+/* ===== RADIO BUTTONS ===== */
+.modal__radio-btn {
+    margin-right: 8px;
+    accent-color: rgba(0, 0, 0, 1);
+}
+
+.modal__radio-btn + .modal__label {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.modal__radio-btn:checked + .modal__label {
+    color: rgba(0, 0, 0, 1);
+}
+
+/* ===== SUBMIT BUTTON ===== */
 .modal__submit-btn {
     margin-top: 32px;
-    background-color: rgba(0, 0, 0, 1);
-    color: rgba(255, 255, 255, 1);
-    border-radius: 4px;
     width: 124px;
     height: 36px;
+    background-color: rgba(0, 0, 0, 1);
+    color: rgba(255, 255, 255, 1);
+    border: none;
+    border-radius: 4px;
 }
 
 .modal__submit-btn:hover {
-    background-color: (255, 255, 255, 1);
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
 .modal__submit-btn_disabled {
