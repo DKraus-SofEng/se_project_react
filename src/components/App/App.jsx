@@ -8,6 +8,10 @@ import Footer from "./Footer/Footer";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import ItemModal from "./ItemModal/ItemModal";
 import { getWeatherData } from "../../utils/weatherApi";
+import {
+    getCurrentPosition,
+    getFallbackCoordinates,
+} from "../../utils/geolocation";
 import { addItem, getClothingItems, deleteItem } from "../../utils/api";
 import { CurrentTemperatureUnitProvider } from "../../contexts/CurrentTemperatureUnitContext";
 import Profile from "../Profile/Profile";
@@ -69,11 +73,30 @@ function App() {
     }
 
     useEffect(() => {
-        getWeatherData()
+        // First try to get user's current location
+        getCurrentPosition()
+            .then((coordinates) => {
+                console.log(
+                    "✅ Geolocation SUCCESS - Using user location:",
+                    coordinates
+                );
+                return getWeatherData(coordinates);
+            })
+            .catch((locationError) => {
+                console.warn("❌ Geolocation FAILED:", locationError.message);
+                console.log("🔄 Using fallback coordinates (Denver)");
+                // If geolocation fails, use fallback coordinates
+                const fallbackCoords = getFallbackCoordinates();
+                console.log("📍 Fallback coordinates:", fallbackCoords);
+                return getWeatherData(fallbackCoords);
+            })
             .then((data) => {
+                console.log("🌤️ Weather data received for:", data.location);
                 setWeatherData(data);
             })
-            .catch(console.error);
+            .catch((weatherError) => {
+                console.error("Failed to get weather data:", weatherError);
+            });
     }, []);
 
     useEffect(() => {

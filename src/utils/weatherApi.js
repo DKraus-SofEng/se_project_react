@@ -1,7 +1,7 @@
-import { apiKey, coordinates } from "./constants";
+import { apiKey } from "./constants";
 //  api.openweathermap.org
 
-export function getWeatherData() {
+export function getWeatherData(coordinates) {
     const { lat, lon } = coordinates;
     return fetch(
         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`

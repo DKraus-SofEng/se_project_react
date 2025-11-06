@@ -1,27 +1,70 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useForm } from "../../hooks/useForm";
+import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 import "./AddItemModal.css";
 
 function AddItemModal({ isOpen, handleCloseModal, onAddItem }) {
-    const { values, handleChange, handleReset } = useForm({
-        name: "",
-        imageUrl: "",
-        weather: "hot",
-    });
+    // Validation rules
+    const validationRules = {
+        name: {
+            required: { message: "Name is required" },
+            minLength: {
+                value: 2,
+                message: "Name must be at least 2 characters",
+            },
+            maxLength: {
+                value: 30,
+                message: "Name must be no more than 30 characters",
+            },
+        },
+        imageUrl: {
+            required: { message: "Image URL is required" },
+            pattern: {
+                value: /^https?:\/\/.+\.(jpg|jpeg|png|gif|bmp|webp)(\?.*)?$/i,
+                message:
+                    "Please enter a valid image URL (jpg, jpeg, png, gif, bmp, webp)",
+            },
+        },
+    };
+
+    const {
+        values,
+        errors,
+        isValid,
+        handleChange,
+        handleBlur,
+        handleReset,
+        getFieldError,
+    } = useFormWithValidation(
+        {
+            name: "",
+            imageUrl: "",
+            weather: "hot",
+        },
+        validationRules
+    );
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        onAddItem(values);
+        if (isValid) {
+            onAddItem(values);
+            handleReset();
+            handleCloseModal();
+        }
+    };
+
+    const handleModalClose = () => {
         handleReset();
+        handleCloseModal();
     };
     return (
         <ModalWithForm
             isOpen={isOpen}
-            onClose={handleCloseModal}
+            onClose={handleModalClose}
             title="New Garment"
             buttonText="Add Garment"
             name="add-garment-form"
             handleSubmit={handleFormSubmit}
+            isValid={isValid}
         >
             <fieldset className="modal__fieldset">
                 <label htmlFor="add-name-input" className="modal__label">
@@ -30,11 +73,21 @@ function AddItemModal({ isOpen, handleCloseModal, onAddItem }) {
                         id="add-name-input"
                         name="name"
                         type="text"
-                        className="modal__input"
+                        className={`modal__input ${
+                            getFieldError("name")
+                                ? "modal__input_type_error"
+                                : ""
+                        }`}
                         placeholder="Name"
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         value={values.name}
                     />
+                    {getFieldError("name") && (
+                        <span className="modal__error">
+                            {getFieldError("name")}
+                        </span>
+                    )}
                 </label>
                 <label
                     htmlFor="add-garment-image-input"
@@ -45,11 +98,21 @@ function AddItemModal({ isOpen, handleCloseModal, onAddItem }) {
                         id="add-garment-image-input"
                         name="imageUrl"
                         type="url"
-                        className="modal__input"
+                        className={`modal__input ${
+                            getFieldError("imageUrl")
+                                ? "modal__input_type_error"
+                                : ""
+                        }`}
                         placeholder="Image URL"
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         value={values.imageUrl}
                     />
+                    {getFieldError("imageUrl") && (
+                        <span className="modal__error">
+                            {getFieldError("imageUrl")}
+                        </span>
+                    )}
                 </label>
             </fieldset>
             <fieldset className="modal__fieldset modal__fieldset_type_radio">
