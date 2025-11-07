@@ -3,7 +3,6 @@ import {
     useContext,
     useMemo,
     useState,
-    createElement,
 } from "react";
 
 const CurrentTemperatureUnitContext = createContext();
@@ -24,10 +23,10 @@ export function CurrentTemperatureUnitProvider({ children }) {
         [currentTempUnit]
     );
 
-    return createElement(
-        CurrentTemperatureUnitContext.Provider,
-        { value },
-        children
+    return (
+        <CurrentTemperatureUnitContext.Provider value={value}>
+            {children}
+        </CurrentTemperatureUnitContext.Provider>
     );
 }
 
