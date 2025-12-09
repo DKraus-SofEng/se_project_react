@@ -7,11 +7,20 @@
     justify-content: center;
 }
 
-.card__title {
+.card__header {
     position: absolute;
-    align-self: center;
     top: 15px;
-
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: max-content;
+    z-index: 2;
+}
+.card__title {
+    top: 15px;
     border: none;
     background-color: rgba(255, 255, 255, 1);
     border-radius: 4px;
@@ -19,6 +28,12 @@
     margin: 0;
     font-size: 16px;
     padding: 2px 12px;
+}
+
+.card__like-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 .card__image {

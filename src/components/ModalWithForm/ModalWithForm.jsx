@@ -11,6 +11,7 @@ function ModalWithForm({
     buttonText,
     name,
     isValid = true,
+    extraContent,
 }) {
     function handleOverlayClick(e) {
         if (e.target === e.currentTarget) {
@@ -37,16 +38,18 @@ function ModalWithForm({
                     className="modal__form"
                 >
                     {children}
-
-                    <button
-                        type="submit"
-                        className={`modal__submit-btn ${
-                            !isValid ? "modal__submit-btn_disabled" : ""
-                        }`}
-                        disabled={!isValid}
-                    >
-                        {buttonText}
-                    </button>
+                    <div className="modal__actions">
+                        <button
+                            type="submit"
+                            className={`modal__submit-btn ${
+                                !isValid ? "modal__submit-btn_disabled" : ""
+                            }`}
+                            disabled={!isValid}
+                        >
+                            {buttonText}
+                        </button>
+                        {extraContent}
+                    </div>
                 </form>
             </div>
         </div>

@@ -11,9 +11,10 @@
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "json-server": "json-server --watch db.json --id _id --port 3001"
+    "json-server": "json-server --watch db.json --id _id --port 3000"
   },
   "dependencies": {
+    "mongoose": "^8.19.3",
     "normalize.css": "^8.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

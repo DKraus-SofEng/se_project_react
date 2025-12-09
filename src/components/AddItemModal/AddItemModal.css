@@ -1,32 +1,5 @@
-/* AddItemModal styles - currently using shared modal styles from ItemModal.css */
-
-/* Validation error styles */
-.modal__error {
-    display: block;
-    color: #ff4d4f;
-    font-size: 12px;
-    margin-top: -18px;
-    margin-bottom: 16px;
-    font-weight: 400;
-}
-
-/* Input error state */
-.modal__input_type_error {
-    border-color: #ff4d4f;
-}
-
 /* Prevent radio buttons from getting red borders */
 .modal__radio-btn_type_error {
     border-color: initial;
     accent-color: rgba(0, 0, 0, 1);
-}
-
-/* Disabled submit button styles */
-.modal__submit-btn_disabled {
-    background-color: rgba(0, 0, 0, 0.3);
-    cursor: not-allowed;
-}
-
-.modal__submit-btn_disabled:hover {
-    background-color: rgba(0, 0, 0, 0.3);
 }

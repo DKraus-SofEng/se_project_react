@@ -8,14 +8,23 @@ function Profile({
     clothingItems,
     handleOpenItemModal,
     handleOpenAddGarmentModal,
+    setIsLoggedIn,
+    isLoggedIn,
+    onCardLike,
+    handleOpenEditProfileModal,
 }) {
     return (
         <main className="profile">
-            <Sidebar />
+            <Sidebar
+                setIsLoggedIn={setIsLoggedIn}
+                handleOpenEditProfileModal={handleOpenEditProfileModal}
+            />
             <ClothesSection
                 clothingItems={clothingItems}
                 handleOpenItemModal={handleOpenItemModal}
                 handleOpenAddGarmentModal={handleOpenAddGarmentModal}
+                isLoggedIn={isLoggedIn}
+                onCardLike={onCardLike}
             />
         </main>
     );

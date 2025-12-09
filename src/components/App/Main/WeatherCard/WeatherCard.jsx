@@ -1,4 +1,4 @@
-import { useCurrentTemperatureUnit } from "../../../../contexts/CurrentTemperatureUnitContext";
+import { useCurrentTemperatureUnit } from "../../../../contexts/CurrentTemperatureUnitContext.jsx";
 import "./WeatherCard.css";
 import { weatherConditionImages } from "../../../../utils/constants";
 

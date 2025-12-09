@@ -2,7 +2,7 @@
 
 ## WTWR (se_project_react)
 
-This is the React.js project of the fulltime Software Engineering program at TripleTen. It is a small React + Vite app that recommends clothing based on current weather temperature of the chosen location.
+This is the WTWR (What to Wear) React.js project of the fulltime Software Engineering program at TripleTen. It is a small React + Vite app that recommends clothing based on current weather temperature of the chosen location.
 
 Fetches current weather from OpenWeather, normalizes it, and shows matching clothing cards.
 
@@ -63,7 +63,7 @@ users may have difficulty closing the modal when viewing light-colored items
 
 **Figma**
 
-Project is linked to Figma at https://www.figma.com/design/dQLJwEKasIdspciJAJrCaf/Sprint-11_-WTWR?node-id=311-433&p=f&t=THYrkQA0UVHRJ4py-0.
+Project is linked to Figma at https://www.figma.com/design/bfVOvqlLmoKZ5lpro8WWBe/Sprint-14_-WTWR?node-id=0-1&p=f&t=KBr3bYw1ZOL9Z6sn-0.
 
 **GitHub**
 
@@ -72,3 +72,6 @@ Link to deployed project on GitHub Pages: https://DKraus-SofEng.github.io/se_pro
 **Project Pitch Video**
 
 You can find the project pitch video at: https://www.loom.com/share/c322926d4fff4ba684481389b3af9d2a
+
+**Project Back End**
+https://github.com/DKraus-SofEng/se_project_express

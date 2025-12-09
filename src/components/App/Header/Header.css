@@ -9,6 +9,7 @@
 .header__side {
     display: flex;
     align-items: center;
+    gap: 20px;
 }
 
 .header__logo {
@@ -24,6 +25,11 @@
     font-size: 20px;
 }
 
+.header__auth-btn {
+    border: none;
+    background: none;
+}
+
 .header__profile-link {
     display: flex;
     color: #000;
@@ -37,4 +43,18 @@
     width: 40px;
     height: 40px;
     align-self: center;
+}
+
+.header__avatar-placeholder {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 1);
 }

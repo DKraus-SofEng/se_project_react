@@ -1,7 +1,12 @@
 import "./ItemModal.css";
 import closeIcon from "../../../assets/close-icon-white.svg";
+import { useContext } from "react";
+import CurrentUserContext from "../../../contexts/CurrentUserContext";
 
 function ItemModal({ card, isOpen, onClose, handleOpenConfirmationModal }) {
+    const { currentUser } = useContext(CurrentUserContext);
+    const isOwn = card.owner === currentUser?._id;
+
     function handleOverlayClick(e) {
         if (e.target === e.currentTarget) {
             onClose();
@@ -34,13 +39,15 @@ function ItemModal({ card, isOpen, onClose, handleOpenConfirmationModal }) {
                     <div className="modal__footer-row">
                         <h2 className="modal__text">{card.name}</h2>
 
-                        <button
-                            type="button"
-                            className="modal__delete-btn"
-                            onClick={handleDelete}
-                        >
-                            Delete item
-                        </button>
+                        {isOwn && (
+                            <button
+                                type="button"
+                                className="modal__delete-btn"
+                                onClick={handleDelete}
+                            >
+                                Delete item
+                            </button>
+                        )}
                     </div>
                     <p className="modal__text">{card.weather}</p>
                 </div>
