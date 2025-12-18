@@ -1,5 +1,8 @@
 // BASE_URL for the API
-export const BASE_URL = "http://localhost:3001/";
+export const BASE_URL =
+    process.env.NODE_ENV === "production"
+        ? "https://api.wtwr.bot.nu"
+        : "http://localhost:3001";
 
 // SIGNUP (REGISTER) function
 export const signup = ({ name, avatar, email, password }) => {
