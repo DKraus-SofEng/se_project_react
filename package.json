@@ -10,7 +10,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
+    "deploy": "npm run build && scp -r ./dist/* delight_kraus@wtwr.bot.nu:/home/delight_kraus/frontend",
     "json-server": "json-server --watch db.json --id _id --port 3000"
   },
   "dependencies": {
@@ -24,6 +24,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.0.0",
+    "baseline-browser-mapping": "^2.9.11",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.2",
     "eslint-plugin-react-hooks": "^4.6.2",

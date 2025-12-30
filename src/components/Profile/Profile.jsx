@@ -1,6 +1,7 @@
 // import { Link } from "react-router-dom";
 import ClothesSection from "./ClothesSection/ClothesSection";
 import Sidebar from "./Sidebar/Sidebar";
+import { useAuth } from "../../contexts/AuthContext";
 
 import "./Profile.css";
 
@@ -8,22 +9,18 @@ function Profile({
     clothingItems,
     handleOpenItemModal,
     handleOpenAddGarmentModal,
-    setIsLoggedIn,
-    isLoggedIn,
     onCardLike,
     handleOpenEditProfileModal,
 }) {
+    const { user } = useAuth();
+
     return (
         <main className="profile">
-            <Sidebar
-                setIsLoggedIn={setIsLoggedIn}
-                handleOpenEditProfileModal={handleOpenEditProfileModal}
-            />
+            <Sidebar handleOpenEditProfileModal={handleOpenEditProfileModal} />
             <ClothesSection
                 clothingItems={clothingItems}
                 handleOpenItemModal={handleOpenItemModal}
                 handleOpenAddGarmentModal={handleOpenAddGarmentModal}
-                isLoggedIn={isLoggedIn}
                 onCardLike={onCardLike}
             />
         </main>

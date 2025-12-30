@@ -2,8 +2,14 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 import "./RegisterModal.css";
 import { signup } from "../../utils/auth";
+import { useEffect, useState } from "react";
 
-function RegisterModal({ isOpen, handleCloseModal, onRegister, handleOpenLoginModal }) {
+function RegisterModal({
+    isOpen,
+    handleCloseModal,
+    onRegister,
+    handleOpenLoginModal,
+}) {
     // Validation rules
     const validationRules = {
         email: {
@@ -18,6 +24,13 @@ function RegisterModal({ isOpen, handleCloseModal, onRegister, handleOpenLoginMo
             minLength: {
                 value: 8,
                 message: "Password must be at least 8 characters",
+            },
+        },
+        confirmPassword: {
+            required: { message: "Please confirm your password" },
+            custom: {
+                isValid: (value, values) => value === values.password,
+                message: "Passwords do not match",
             },
         },
         name: {
@@ -59,19 +72,54 @@ function RegisterModal({ isOpen, handleCloseModal, onRegister, handleOpenLoginMo
         validationRules
     );
 
-    const handleFormSubmit = (event) => {
+    const [registerError, setRegisterError] = useState("");
+    const [registerSuccess, setRegisterSuccess] = useState(false); // success state
+
+    const handleFormSubmit = async (event) => {
         event.preventDefault();
+        setRegisterError("");
+        setRegisterSuccess(false); // reset success state
         if (isValid) {
-            onRegister(values);
-            handleReset();
-            handleCloseModal();
+            const result = await onRegister({
+                name: values.name,
+                email: values.email,
+                password: values.password,
+                avatar: values.avatar,
+            });
+            if (result?.success) {
+                handleReset();
+                setRegisterSuccess(true); // show success message
+                setTimeout(() => {
+                    setRegisterSuccess(false); // hide success message
+                    handleCloseModal();
+                    handleOpenLoginModal(); // Open login after signup
+                }, 3000); // 3 seconds
+            } else if (result?.message) {
+                setRegisterError(result.message);
+            } else {
+                setRegisterError("Registration failed. Please try again.");
+            }
         }
     };
 
     const handleModalClose = () => {
         handleReset();
+        setRegisterSuccess(false); // reset success state on close
         handleCloseModal();
     };
+
+    useEffect(() => {
+        const clearForm = () => {
+            handleReset();
+            setRegisterError("");
+            setRegisterSuccess(false);
+        };
+        window.addEventListener("clear-register-form", clearForm);
+        return () => {
+            window.removeEventListener("clear-register-form", clearForm);
+        };
+    }, [handleReset]);
+
     return (
         <ModalWithForm
             isOpen={isOpen}
@@ -94,6 +142,16 @@ function RegisterModal({ isOpen, handleCloseModal, onRegister, handleOpenLoginMo
             }
         >
             <fieldset className="modal__fieldset">
+                {registerError && (
+                    <span className="modal__error modal__error_global">
+                        {registerError}
+                    </span>
+                )}
+                {registerSuccess && (
+                    <span className="modal__success modal__success_global">
+                        Registration successful! Please login.
+                    </span>
+                )}
                 {/* EMAIL INPUT */}
                 <label htmlFor="email-input" className="modal__label">
                     Email*{" "}
@@ -137,6 +195,32 @@ function RegisterModal({ isOpen, handleCloseModal, onRegister, handleOpenLoginMo
                     {getFieldError("password") && (
                         <span className="modal__error">
                             {getFieldError("password")}
+                        </span>
+                    )}
+                </label>
+                <label
+                    htmlFor="confirm-password-input"
+                    className="modal__label"
+                >
+                    Confirm Password*{" "}
+                    <input
+                        id="confirm-password-input"
+                        name="confirmPassword"
+                        type="password"
+                        className={`modal__input ${
+                            getFieldError("confirmPassword")
+                                ? "modal__input_type_error"
+                                : ""
+                        }`}
+                        placeholder="Confirm Password"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.confirmPassword || ""}
+                        required
+                    />
+                    {getFieldError("confirmPassword") && (
+                        <span className="modal__error">
+                            {getFieldError("confirmPassword")}
                         </span>
                     )}
                 </label>

@@ -1,14 +1,10 @@
 import "./ItemCard.css";
 import likeDefault from "../../../../assets/like-icon-default.svg";
 import likeActive from "../../../../assets/like-icon-liked.svg";
+import { useAuth } from "../../../../contexts/AuthContext";
 
-function ItemCard({
-    clothingItem,
-    onCardClick,
-    isLoggedIn,
-    isLiked,
-    onCardLike,
-}) {
+function ItemCard({ clothingItem, onCardClick, onCardLike, isLiked }) {
+    const { user } = useAuth();
     function handleOpenCard() {
         onCardClick(clothingItem);
     }
@@ -22,7 +18,7 @@ function ItemCard({
             />
             <div className="card__header">
                 <h2 className="card__title">{clothingItem.name}</h2>
-                {isLoggedIn && typeof clothingItem._id === "string" && (
+                {user && typeof clothingItem._id === "string" && (
                     <button
                         className="card__like-btn"
                         onClick={() =>

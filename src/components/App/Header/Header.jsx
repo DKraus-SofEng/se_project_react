@@ -3,8 +3,7 @@ import logo from "../../../assets/logo.svg";
 import avatar from "../../../assets/avatar.png";
 import "./Header.css";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
-import { useContext } from "react";
-import CurrentUserContext from "../../../contexts/CurrentUserContext";
+import { useAuth } from "../../../contexts/AuthContext";
 
 function Header({
     handleOpenAddGarmentModal,
@@ -12,7 +11,7 @@ function Header({
     handleOpenRegisterModal,
     handleOpenLoginModal,
 }) {
-    const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+    const { user } = useAuth();
     const now = new Date();
     const dateStr = now.toLocaleString("default", {
         month: "long",
@@ -39,8 +38,8 @@ function Header({
                 </div>
                 <div className="header__side">
                     <ToggleSwitch />
-                    {currentUser ? (
-                        // Render this is user is logged in
+                    {user ? (
+                        // Render this if user is logged in
                         <>
                             <button
                                 onClick={handleOpenAddGarmentModal}
@@ -52,20 +51,16 @@ function Header({
                                 className="header__profile-link"
                                 to="/profile"
                             >
-                                <p className="header__userName">
-                                    {currentUser.name}
-                                </p>
-                                {currentUser.avatar ? (
+                                <p className="header__userName">{user.name}</p>
+                                {user.avatar ? (
                                     <img
                                         className="header__avatar"
-                                        src={currentUser.avatar}
-                                        alt={`${currentUser.name}'s avatar`}
+                                        src={user.avatar}
+                                        alt={`${user.name}'s avatar`}
                                     />
                                 ) : (
                                     <div className="header__avatar-placeholder">
-                                        {currentUser.name
-                                            .charAt(0)
-                                            .toUpperCase()}
+                                        {user.name.charAt(0).toUpperCase()}
                                     </div>
                                 )}
                             </Link>

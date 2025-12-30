@@ -1,5 +1,1 @@
-import { createContext } from "react";
-
-const CurrentUserContext = createContext();
-
-export default CurrentUserContext;
+// This file is no longer needed. Please use user and setUser from AuthContext instead.

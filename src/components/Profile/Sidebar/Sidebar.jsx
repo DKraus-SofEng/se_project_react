@@ -1,16 +1,14 @@
 import "./Sidebar.css";
 import avatar from "../../../assets/avatar.png";
-import { useContext } from "react";
-import CurrentUserContext from "../../../contexts/CurrentUserContext";
+import { useAuth } from "../../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-function Sidebar({ handleOpenEditProfileModal, setIsLoggedIn }) {
-    const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+function Sidebar({ handleOpenEditProfileModal }) {
+    const { user, setUser } = useAuth();
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        setCurrentUser(null);
-        setIsLoggedIn(false);
+        setUser(null);
         localStorage.removeItem("jwt");
         navigate("/");
     };
@@ -18,17 +16,11 @@ function Sidebar({ handleOpenEditProfileModal, setIsLoggedIn }) {
     return (
         <aside className="sidebar">
             <div className="sidebar__row">
-                <p className="sidebar__userName">
-                    {currentUser?.name || "User"}
-                </p>
+                <p className="sidebar__userName">{user?.name || "User"}</p>
                 <img
                     className="sidebar__avatar"
-                    src={currentUser.avatar}
-                    alt={
-                        currentUser?.name
-                            ? `${currentUser.name}'s avatar`
-                            : "User avatar"
-                    }
+                    src={user.avatar}
+                    alt={user?.name ? `${user.name}'s avatar` : "User avatar"}
                 />
             </div>
             <button

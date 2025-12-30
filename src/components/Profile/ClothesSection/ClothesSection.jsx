@@ -1,26 +1,22 @@
 import "./ClothesSection.css";
 import ItemCard from "../../App/Main/ItemCard/ItemCard";
-import { useContext } from "react";
-import CurrentUserContext from "../../../contexts/CurrentUserContext";
+import { useAuth } from "../../../contexts/AuthContext";
 
 function ClothesSection({
     clothingItems,
     handleOpenItemModal,
     handleOpenAddGarmentModal,
-    isLoggedIn,
     onCardLike,
 }) {
-    const { currentUser } = useContext(CurrentUserContext);
-    console.log("currentUser", currentUser);
-    console.log("clothingItem", clothingItems);
+    const { user } = useAuth();
 
     const userItems = clothingItems.filter(
         (item) =>
             item.owner &&
             (typeof item.owner === "string" ? item.owner : item.owner._id) ===
-                currentUser._id
+                user._id
     );
-    console.log("userItems", userItems);
+
     return (
         <section className="clothes-section">
             <div className="clothes-section__row">
@@ -37,11 +33,8 @@ function ClothesSection({
                     <ItemCard
                         key={item._id}
                         clothingItem={item}
-                        isLoggedIn={isLoggedIn}
                         isLiked={
-                            isLoggedIn &&
-                            item.likes &&
-                            item.likes.includes(currentUser?._id)
+                            item.likes && user && item.likes.includes(user._id)
                         }
                         onCardLike={onCardLike}
                         onCardClick={handleOpenItemModal}

@@ -1,5 +1,6 @@
 import { useMemo } from "react";
-import { useCurrentTemperatureUnit } from "../../../contexts/CurrentTemperatureUnitContext.jsx";
+import { useCurrentTemperatureUnit } from "../../../contexts/CurrentTemperatureUnitContext";
+import { useAuth } from "../../../contexts/AuthContext";
 
 import "./Main.css";
 import WeatherCard from "./WeatherCard/WeatherCard";
@@ -10,11 +11,11 @@ function Main({
     handleOpenItemModal,
     weatherData,
     getWeatherCondition,
-    isLoggedIn,
-    currentUser,
     onCardLike,
 }) {
     const { currentTempUnit = "F" } = useCurrentTemperatureUnit();
+    const { user } = useAuth();
+
     const tempToShow =
         weatherData?.temp?.[currentTempUnit] ?? weatherData?.temp ?? "0";
 
@@ -30,7 +31,7 @@ function Main({
     }, [clothingItems, weatherCondition]);
 
     const isItemLiked = (item) =>
-        isLoggedIn && item.likes && item.likes.includes(currentUser?._id);
+        user && item.likes && item.likes.includes(user?._id);
 
     return (
         <main className="main">
@@ -45,7 +46,6 @@ function Main({
                         key={item._id}
                         clothingItem={item}
                         isLiked={isItemLiked(item)}
-                        isLoggedIn={isLoggedIn}
                         onCardLike={onCardLike}
                         onCardClick={handleOpenItemModal}
                     />

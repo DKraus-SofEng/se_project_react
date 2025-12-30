@@ -39,14 +39,17 @@
     object-fit: contain;
 }
 
-.modal__close-btn {
+.item-modal__close-btn {
     position: absolute;
     top: 24px;
     right: 24px;
     width: 20px;
     height: 20px;
     border: none;
-    background-color: transparent;
+    background-color: rgb(186, 183, 183);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal__footer {
@@ -137,15 +140,4 @@
 
 .modal__radio-btn:checked + .modal__label {
     color: rgba(0, 0, 0, 1);
-}
-
-/* ===== SUBMIT BUTTON ===== */
-.modal__submit-btn {
-    margin-top: 32px;
-    width: 124px;
-    height: 36px;
-    background-color: rgba(0, 0, 0, 1);
-    color: rgba(255, 255, 255, 1);
-    border: none;
-    border-radius: 4px;
 }

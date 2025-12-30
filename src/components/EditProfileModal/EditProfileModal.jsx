@@ -1,11 +1,10 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
-import { useContext } from "react";
-import CurrentUserContext from "../../contexts/CurrentUserContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { useEffect } from "react";
 
 function EditProfileModal({ isOpen, handleCloseModal, onEditProfile }) {
-    const { currentUser } = useContext(CurrentUserContext);
+    const { user } = useAuth();
     // Validation rules
     const validationRules = {
         name: {
@@ -40,18 +39,29 @@ function EditProfileModal({ isOpen, handleCloseModal, onEditProfile }) {
         setValues,
     } = useFormWithValidation(
         {
-            name: currentUser?.name || "",
-            avatar: currentUser?.avatar || "",
+            name: user?.name || "",
+            avatar: user?.avatar || "",
         },
         validationRules
     );
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
+        console.log(
+            "[EditProfileModal] Submit clicked. isValid:",
+            isValid,
+            "values:",
+            values
+        );
         if (isValid) {
             onEditProfile(values);
             handleReset();
             handleCloseModal();
+        } else {
+            console.log(
+                "[EditProfileModal] Form is not valid. Errors:",
+                errors
+            );
         }
     };
 
@@ -61,13 +71,13 @@ function EditProfileModal({ isOpen, handleCloseModal, onEditProfile }) {
     };
     // Pre-fill form when modal opens
     useEffect(() => {
-        if (isOpen && currentUser) {
+        if (isOpen && user) {
             setValues({
-                name: currentUser.name || "",
-                avatar: currentUser.avatar || "",
+                name: user.name || "",
+                avatar: user.avatar || "",
             });
         }
-    }, [isOpen, currentUser, setValues]);
+    }, [isOpen, user, setValues]);
 
     return (
         <ModalWithForm

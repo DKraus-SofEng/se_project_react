@@ -1,6 +1,5 @@
-import { useContext } from "react";
+import { useAuth } from "../contexts/AuthContext";
 import { Navigate, useLocation } from "react-router-dom";
-import CurrentUserContext from "../contexts/CurrentUserContext";
 
 // "anonymous" prop is used to indicate routes that can be visited anonymously
 // (i.e., without authorization). The two 'anonymous' routes in this application
@@ -9,16 +8,15 @@ export default function ProtectedRoute({ children, anonymous = false }) {
     const location = useLocation();
     const from = location.state?.from || "/";
 
-    const { currentUser } = useContext(CurrentUserContext);
-    const isLoggedIn = !!currentUser;
+    const { user } = useAuth();
 
     // If user is logged in, they are redirected away from anonymous routes.
-    if (anonymous && isLoggedIn) {
+    if (anonymous && user) {
         return <Navigate to={from} />;
     }
 
-    if (!anonymous && !isLoggedIn) {
-        return null;
+    if (!anonymous && !user) {
+        return <Navigate to="/" />;
     }
     // Otherwise, display the children of the current route.
     return children;

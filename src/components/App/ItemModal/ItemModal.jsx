@@ -1,30 +1,31 @@
 import "./ItemModal.css";
 import closeIcon from "../../../assets/close-icon-white.svg";
-import { useContext } from "react";
-import CurrentUserContext from "../../../contexts/CurrentUserContext";
+import { useAuth } from "../../../contexts/AuthContext";
 
 function ItemModal({ card, isOpen, onClose, handleOpenConfirmationModal }) {
-    const { currentUser } = useContext(CurrentUserContext);
-    const isOwn = card.owner === currentUser?._id;
+    const { user } = useAuth();
+    const isOwn = card.owner === user?._id;
 
+    function handleDelete() {
+        handleOpenConfirmationModal(card);
+    }
+
+    // Overlay click handler: only close if click is on overlay, not modal__container
     function handleOverlayClick(e) {
         if (e.target === e.currentTarget) {
             onClose();
         }
     }
-    function handleDelete() {
-        handleOpenConfirmationModal(card);
-    }
 
     return (
         <div
-            className={`modal ${isOpen ? "modal_is-opened" : ""}`}
+            className={`modal${isOpen ? " modal_is-opened" : ""}`}
             onClick={handleOverlayClick}
         >
             <div className="modal__container">
                 <button
                     type="button"
-                    className="modal__close-btn"
+                    className="modal__close-btn item-modal__close-btn"
                     onClick={onClose}
                 >
                     <img src={closeIcon} alt="close icon" />

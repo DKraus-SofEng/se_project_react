@@ -8,7 +8,7 @@ export function useFormWithValidation(defaultValues, validationRules = {}) {
 
     // Validation function
     const validateField = useCallback(
-        (name, value) => {
+        (name, value, allValues = values) => {
             const rules = validationRules[name];
             if (!rules) return "";
 
@@ -38,9 +38,16 @@ export function useFormWithValidation(defaultValues, validationRules = {}) {
                 return rules.pattern.message || `${name} format is invalid`;
             }
 
+            // Custom validation (e.g., confirmPassword)
+            if (rules.custom && typeof rules.custom.isValid === "function") {
+                if (!rules.custom.isValid(value, allValues)) {
+                    return rules.custom.message || `${name} is invalid`;
+                }
+            }
+
             return "";
         },
-        [validationRules]
+        [validationRules, values]
     );
 
     // Validate all fields
@@ -102,6 +109,20 @@ export function useFormWithValidation(defaultValues, validationRules = {}) {
             );
 
             setIsValid(!hasErrors && allRequiredFieldsFilled);
+
+            // If password changes, re-validate confirmPassword
+            if (name === "password" && "confirmPassword" in validationRules) {
+                const confirmError = validateField(
+                    "confirmPassword",
+                    newValues["confirmPassword"] || "",
+                    newValues
+                );
+                if (confirmError) {
+                    newErrors["confirmPassword"] = confirmError;
+                } else {
+                    delete newErrors["confirmPassword"];
+                }
+            }
         },
         [values, errors, validateField, validationRules]
     );

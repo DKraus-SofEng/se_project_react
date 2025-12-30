@@ -2,6 +2,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 import { Link } from "react-router-dom";
 import "./LoginModal.css";
+import { useEffect, useState, useRef } from "react";
 
 function LoginModal({ isOpen, handleCloseModal, onLogin }) {
     // Validation rules
@@ -15,10 +16,6 @@ function LoginModal({ isOpen, handleCloseModal, onLogin }) {
         },
         password: {
             required: { message: "Password is required" },
-            minLength: {
-                value: 8,
-                message: "Password must be at least 8 characters",
-            },
         },
     };
 
@@ -26,7 +23,7 @@ function LoginModal({ isOpen, handleCloseModal, onLogin }) {
         values,
         errors,
         isValid,
-        handleChange,
+        handleChange: handleChangeOriginal,
         handleBlur,
         handleReset,
         getFieldError,
@@ -38,19 +35,69 @@ function LoginModal({ isOpen, handleCloseModal, onLogin }) {
         validationRules
     );
 
-    const handleFormSubmit = (event) => {
+    const [loginError, setLoginError] = useState("");
+    const [touched, setTouched] = useState({});
+    const wasSubmitted = useRef(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    // Only clear error when modal opens or closes
+    useEffect(() => {
+        if (!isOpen) {
+            setLoginError("");
+        }
+    }, [isOpen]);
+
+    const handleChange = (e) => {
+        handleChangeOriginal(e);
+    };
+
+    const handleFieldBlur = (e) => {
+        setTouched((prev) => ({ ...prev, [e.target.name]: true }));
+        handleBlur(e);
+    };
+
+    const handleFormSubmit = async (event) => {
         event.preventDefault();
+        if (isLoading) return; // Prevent double submit
+        wasSubmitted.current = true;
+        setIsLoading(true);
         if (isValid) {
-            onLogin(values);
-            handleReset();
-            handleCloseModal();
+            try {
+                const result = await onLogin(values);
+                if (result && result.success) {
+                    handleReset();
+                    setTouched({});
+                    wasSubmitted.current = false;
+                    setIsLoading(false);
+                    setLoginError(""); // Clear error before closing modal
+                    handleCloseModal();
+                } else {
+                    setLoginError(
+                        (result && result.message) ||
+                            "Login failed:  incorrect email or password."
+                    );
+                    setIsLoading(false);
+                }
+            } catch (err) {
+                setLoginError("Login failed. Please try again.");
+                setIsLoading(false);
+                console.error("Login error:", err);
+            }
+        } else {
+            setIsLoading(false);
         }
     };
 
     const handleModalClose = () => {
         handleReset();
+        setLoginError(""); // Clear error when closing modal
+        setTouched({});
+        wasSubmitted.current = false;
         handleCloseModal();
     };
+
+    // Only render modal content if isOpen is true
+    if (!isOpen) return null;
     return (
         <ModalWithForm
             isOpen={isOpen}
@@ -70,26 +117,33 @@ function LoginModal({ isOpen, handleCloseModal, onLogin }) {
         >
             <fieldset className="modal__fieldset">
                 {/* EMAIL INPUT */}
+                {isOpen && loginError && (
+                    <span className="modal__error modal__error_global">
+                        {loginError}
+                    </span>
+                )}
                 <label className="modal__label">
                     Email{" "}
                     <input
                         name="email"
                         type="email"
                         className={`modal__input ${
-                            getFieldError("email")
+                            getFieldError("email") &&
+                            (touched.email || wasSubmitted.current)
                                 ? "modal__input_type_error"
                                 : ""
                         }`}
                         placeholder="Email"
                         onChange={handleChange}
-                        onBlur={handleBlur}
+                        onBlur={handleFieldBlur}
                         value={values.email}
                     />
-                    {getFieldError("email") && (
-                        <span className="modal__error">
-                            {getFieldError("email")}
-                        </span>
-                    )}
+                    {getFieldError("email") &&
+                        (touched.email || wasSubmitted.current) && (
+                            <span className="modal__error">
+                                {getFieldError("email")}
+                            </span>
+                        )}
                 </label>
                 {/* PASSWORD INPUT */}
                 <label className="modal__label">
@@ -98,20 +152,22 @@ function LoginModal({ isOpen, handleCloseModal, onLogin }) {
                         name="password"
                         type="password"
                         className={`modal__input ${
-                            getFieldError("password")
+                            getFieldError("password") &&
+                            (touched.password || wasSubmitted.current)
                                 ? "modal__input_type_error"
                                 : ""
                         }`}
                         placeholder="Password"
                         onChange={handleChange}
-                        onBlur={handleBlur}
+                        onBlur={handleFieldBlur}
                         value={values.password}
                     />
-                    {getFieldError("password") && (
-                        <span className="modal__error">
-                            {getFieldError("password")}
-                        </span>
-                    )}
+                    {getFieldError("password") &&
+                        (touched.password || wasSubmitted.current) && (
+                            <span className="modal__error">
+                                {getFieldError("password")}
+                            </span>
+                        )}
                 </label>
             </fieldset>
         </ModalWithForm>

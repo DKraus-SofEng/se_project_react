@@ -1,4 +1,3 @@
-import "../App/ItemModal/ItemModal.css";
 import closeIcon from "../../assets/close-icon.svg";
 import "./ModalWithForm.css";
 
@@ -13,16 +12,8 @@ function ModalWithForm({
     isValid = true,
     extraContent,
 }) {
-    function handleOverlayClick(e) {
-        if (e.target === e.currentTarget) {
-            onClose();
-        }
-    }
     return (
-        <div
-            className={`modal${isOpen ? " modal_is-opened" : ""}`}
-            onClick={handleOverlayClick}
-        >
+        <div className={`modal${isOpen ? " modal_is-opened" : ""}`}>
             <div className="modal__container modal__container_type_form">
                 <h2 className="modal__title">{title}</h2>
                 <button
