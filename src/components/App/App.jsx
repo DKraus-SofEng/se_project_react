@@ -36,6 +36,7 @@ function App() {
     const { user, token, loading, register, login, logout, setUser } =
         useAuth();
     const [activeModal, setActiveModal] = useState("");
+    const [isAnyModalOpen, setIsAnyModalOpen] = useState(false);
     const [clothingItems, setClothingItems] = useState([]);
     const [selectedCard, setselectedCard] = useState({});
     const [weatherData, setWeatherData] = useState({ name: "", temp: "0" });
@@ -44,12 +45,42 @@ function App() {
 
     function handleOpenRegisterModal() {
         setActiveModal("register-modal");
+        setIsAnyModalOpen(true);
         setRegisterError(""); // Clear error on open
         // Clear register form fields by dispatching a custom event
         window.dispatchEvent(new Event("clear-register-form"));
     }
-    function handleCloseRegisterModal() {
+    function handleOpenLoginModal() {
+        setActiveModal("login-modal");
+        setIsAnyModalOpen(true);
+        // Clear login form fields by dispatching a custom event
+        window.dispatchEvent(new Event("clear-login-form"));
+    }
+    function handleOpenEditProfileModal() {
+        setActiveModal("edit-profile-modal");
+        setIsAnyModalOpen(true);
+    }
+
+    function handleOpenItemModal(card) {
+        setActiveModal("item-modal");
+        setIsAnyModalOpen(true);
+        setselectedCard(card);
+    }
+
+    function handleOpenAddGarmentModal() {
+        setActiveModal("add-garment-modal");
+        setIsAnyModalOpen(true);
+    }
+
+    function handleOpenConfirmationModal(card) {
+        setActiveModal("delete-confirmation-modal");
+        setIsAnyModalOpen(true);
+        setCardToDelete(card);
+    }
+    function handleModalClose() {
         setActiveModal("");
+        setIsAnyModalOpen(false);
+        setCardToDelete(null);
     }
 
     // REGISTER/Signup function
@@ -63,14 +94,6 @@ function App() {
         });
     }
 
-    function handleOpenLoginModal() {
-        setActiveModal("login-modal");
-        // Clear login form fields by dispatching a custom event
-        window.dispatchEvent(new Event("clear-login-form"));
-    }
-    function handleCloseLoginModal() {
-        setActiveModal("");
-    }
     // LOGIN function
     function handleLogin(values) {
         // Just return the login promise; let LoginModal handle errors
@@ -81,10 +104,6 @@ function App() {
         logout();
         // Optionally, navigate to home
         navigate("/");
-    }
-
-    function handleOpenEditProfileModal() {
-        setActiveModal("edit-profile-modal");
     }
 
     useEffect(() => {
@@ -99,24 +118,6 @@ function App() {
                 setUser(null);
             });
     }, [token, setUser]);
-
-    function handleOpenItemModal(card) {
-        setActiveModal("item-modal");
-        setselectedCard(card);
-    }
-
-    function handleOpenAddGarmentModal() {
-        setActiveModal("add-garment-modal");
-    }
-
-    function handleOpenConfirmationModal(card) {
-        setActiveModal("delete-confirmation-modal");
-        setCardToDelete(card);
-    }
-    function handleCloseModal() {
-        setActiveModal("");
-        setCardToDelete(null);
-    }
 
     function getWeatherCondition(temperature) {
         if (temperature >= 82) {
@@ -143,7 +144,7 @@ function App() {
                     return clothingItem._id !== cardToDelete._id;
                 });
                 setClothingItems(result);
-                handleCloseModal();
+                handleModalClose();
             })
             .catch(console.error);
     }
@@ -226,6 +227,9 @@ function App() {
                     handleOpenAddGarmentModal={handleOpenAddGarmentModal}
                     handleOpenRegisterModal={handleOpenRegisterModal}
                     handleOpenLoginModal={handleOpenLoginModal}
+                    handleLogout={handleLogout}
+                    handleOpenEditProfileModal={handleOpenEditProfileModal}
+                    isAnyModalOpen={isAnyModalOpen}
                 />
                 <Routes>
                     <Route
@@ -264,34 +268,35 @@ function App() {
                 <Footer />
                 <RegisterModal
                     isOpen={activeModal === "register-modal"}
-                    handleCloseModal={handleCloseRegisterModal}
+                    onClose={handleModalClose}
                     onRegister={handleRegister}
                     handleOpenLoginModal={handleOpenLoginModal}
                 />
                 <LoginModal
                     isOpen={activeModal === "login-modal"}
-                    handleCloseModal={handleCloseLoginModal}
+                    onClose={handleModalClose}
                     onLogin={handleLogin}
                 />
                 <ItemModal
                     card={selectedCard}
                     isOpen={activeModal === "item-modal"}
-                    onClose={handleCloseModal}
+                    onClose={handleModalClose}
                     handleOpenConfirmationModal={handleOpenConfirmationModal}
                 />
+
                 <AddItemModal
                     isOpen={activeModal === "add-garment-modal"}
-                    handleCloseModal={handleCloseModal}
+                    onClose={handleModalClose}
                     onAddItem={handleAddItemSubmit}
                 />
                 <EditProfileModal
                     isOpen={activeModal === "edit-profile-modal"}
-                    handleCloseModal={handleCloseModal}
+                    onClose={handleModalClose}
                     onEditProfile={handleEditProfile}
                 />
                 <DeleteConfirmationModal
                     isOpen={activeModal === "delete-confirmation-modal"}
-                    onClose={handleCloseModal}
+                    onClose={handleModalClose}
                     onConfirm={handleDeleteItem}
                 />
             </div>

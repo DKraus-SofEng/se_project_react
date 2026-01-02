@@ -1,15 +1,19 @@
 import { Link } from "react-router-dom";
 import logo from "../../../assets/logo.svg";
-import avatar from "../../../assets/avatar.png";
 import "./Header.css";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { useAuth } from "../../../contexts/AuthContext";
+import { useState } from "react";
+import MenuModal from "../../MenuModal/MenuModal";
 
 function Header({
     handleOpenAddGarmentModal,
     weatherData,
     handleOpenRegisterModal,
     handleOpenLoginModal,
+    handleLogout,
+    handleOpenEditProfileModal,
+    isAnyModalOpen, // <-- pass this from App.jsx
 }) {
     const { user } = useAuth();
     const now = new Date();
@@ -17,10 +21,33 @@ function Header({
         month: "long",
         day: "numeric",
     });
+    const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
+    const toggleMobileMenu = () => setIsMobileMenuOpened((prev) => !prev);
+
+    const handleLoginAndCloseMenu = () => {
+        handleOpenLoginModal();
+        setIsMobileMenuOpened(false);
+    };
+
+    const handleSignupAndCloseMenu = () => {
+        handleOpenRegisterModal();
+        setIsMobileMenuOpened(false);
+    };
+
+    const handleAddGarmentAndCloseMenu = () => {
+        handleOpenAddGarmentModal();
+        setIsMobileMenuOpened(false);
+    };
+
+    const handleEditProfileAndCloseMenu = () => {
+        handleOpenEditProfileModal();
+        setIsMobileMenuOpened(false);
+    };
 
     return (
         <>
             <header className="header">
+                {/* Left side: logo and location */}
                 <div className="header__side">
                     <Link to="/">
                         <img
@@ -36,11 +63,67 @@ function Header({
                         , {weatherData.location}
                     </p>
                 </div>
-                <div className="header__side">
+                {/* Mobile layout: stacked rows for logo/date/location and user info */}
+                <div className="header__mobile-wrapper">
+                    <div className="header__mobile-top">
+                        <Link to="/">
+                            <img
+                                className="header__logo"
+                                src={logo}
+                                alt="wtwr logo"
+                            />
+                        </Link>
+                        <p className="header__location">
+                            <time className="header__dateTime" dateTime={now}>
+                                {dateStr}
+                            </time>
+                            , {weatherData.location}
+                        </p>
+                    </div>
+                    {user && (
+                        <div className="header__mobile-user">
+                            <span className="header__userName">
+                                {user.name}
+                            </span>
+                            {user.avatar ? (
+                                <img
+                                    className="header__avatar"
+                                    src={user.avatar}
+                                    alt={`${user.name}'s avatar`}
+                                />
+                            ) : (
+                                <div className="avatar-placeholder">
+                                    {user.name.charAt(0).toUpperCase()}
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+                {/* Hamburger menu/close button - opens/closes the MenuModal in mobile view */}
+                {!isMobileMenuOpened && !isAnyModalOpen ? (
+                    <button
+                        className="header__menu-btn"
+                        onClick={toggleMobileMenu}
+                        aria-label="Open menu"
+                    >
+                        <span className="header__menu-icon"></span>
+                    </button>
+                ) : isMobileMenuOpened ? (
+                    <button
+                        className="header__close-btn"
+                        onClick={toggleMobileMenu}
+                        aria-label="Close menu"
+                    >
+                        &times;
+                    </button>
+                ) : null}
+                {/* Desktop layout: left and right sides */}
+                <div className="header__side header__side--desktop">
                     <ToggleSwitch />
                     {user ? (
                         // Render this if user is logged in
                         <>
+                            {/* Add clothes button only for desktop */}
                             <button
                                 onClick={handleOpenAddGarmentModal}
                                 className="header__add-clothes-btn"
@@ -59,7 +142,7 @@ function Header({
                                         alt={`${user.name}'s avatar`}
                                     />
                                 ) : (
-                                    <div className="header__avatar-placeholder">
+                                    <div className="avatar-placeholder">
                                         {user.name.charAt(0).toUpperCase()}
                                     </div>
                                 )}
@@ -83,6 +166,16 @@ function Header({
                         </>
                     )}
                 </div>
+                <MenuModal
+                    isOpen={isMobileMenuOpened}
+                    onClose={toggleMobileMenu}
+                    user={user}
+                    onLogin={handleLoginAndCloseMenu}
+                    onSignup={handleSignupAndCloseMenu}
+                    onLogout={handleLogout}
+                    onAddClothes={handleAddGarmentAndCloseMenu}
+                    onChangeProfile={handleEditProfileAndCloseMenu}
+                />
             </header>
         </>
     );

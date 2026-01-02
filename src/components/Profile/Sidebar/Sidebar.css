@@ -23,6 +23,7 @@
     width: 56px;
     height: 56px;
     align-self: center;
+    border-radius: 50%;
 }
 
 .sidebar__edit-profile {
@@ -35,4 +36,10 @@
 .sidebar__logout {
     border: none;
     background-color: white;
+}
+
+@media screen and (max-width: 640px) {
+    .sidebar {
+        display: none !important;
+    }
 }

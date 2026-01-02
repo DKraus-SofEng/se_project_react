@@ -22,7 +22,7 @@ function ItemModal({ card, isOpen, onClose, handleOpenConfirmationModal }) {
             className={`modal${isOpen ? " modal_is-opened" : ""}`}
             onClick={handleOverlayClick}
         >
-            <div className="modal__container">
+            <div className="item-modal__container">
                 <button
                     type="button"
                     className="modal__close-btn item-modal__close-btn"

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "./LoginModal.css";
 import { useEffect, useState, useRef } from "react";
 
-function LoginModal({ isOpen, handleCloseModal, onLogin }) {
+function LoginModal({ isOpen, onClose, onLogin }) {
     // Validation rules
     const validationRules = {
         email: {
@@ -70,7 +70,7 @@ function LoginModal({ isOpen, handleCloseModal, onLogin }) {
                     wasSubmitted.current = false;
                     setIsLoading(false);
                     setLoginError(""); // Clear error before closing modal
-                    handleCloseModal();
+                    onClose();
                 } else {
                     setLoginError(
                         (result && result.message) ||
@@ -93,7 +93,7 @@ function LoginModal({ isOpen, handleCloseModal, onLogin }) {
         setLoginError(""); // Clear error when closing modal
         setTouched({});
         wasSubmitted.current = false;
-        handleCloseModal();
+        onClose();
     };
 
     // Only render modal content if isOpen is true

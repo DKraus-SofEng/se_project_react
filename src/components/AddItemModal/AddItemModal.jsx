@@ -2,7 +2,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 import "./AddItemModal.css";
 
-function AddItemModal({ isOpen, handleCloseModal, onAddItem }) {
+function AddItemModal({ isOpen, onClose, onAddItem }) {
     // Validation rules
     const validationRules = {
         name: {
@@ -48,14 +48,15 @@ function AddItemModal({ isOpen, handleCloseModal, onAddItem }) {
         if (isValid) {
             onAddItem(values);
             handleReset();
-            handleCloseModal();
+            onClose();
         }
     };
 
     const handleModalClose = () => {
         handleReset();
-        handleCloseModal();
+        onClose();
     };
+    if (!isOpen) return null;
     return (
         <ModalWithForm
             isOpen={isOpen}

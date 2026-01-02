@@ -4,12 +4,7 @@ import "./RegisterModal.css";
 import { signup } from "../../utils/auth";
 import { useEffect, useState } from "react";
 
-function RegisterModal({
-    isOpen,
-    handleCloseModal,
-    onRegister,
-    handleOpenLoginModal,
-}) {
+function RegisterModal({ isOpen, onClose, onRegister, handleOpenLoginModal }) {
     // Validation rules
     const validationRules = {
         email: {
@@ -91,7 +86,7 @@ function RegisterModal({
                 setRegisterSuccess(true); // show success message
                 setTimeout(() => {
                     setRegisterSuccess(false); // hide success message
-                    handleCloseModal();
+                    onClose();
                     handleOpenLoginModal(); // Open login after signup
                 }, 3000); // 3 seconds
             } else if (result?.message) {
@@ -105,7 +100,7 @@ function RegisterModal({
     const handleModalClose = () => {
         handleReset();
         setRegisterSuccess(false); // reset success state on close
-        handleCloseModal();
+        onClose();
     };
 
     useEffect(() => {
@@ -120,6 +115,7 @@ function RegisterModal({
         };
     }, [handleReset]);
 
+    if (!isOpen) return null;
     return (
         <ModalWithForm
             isOpen={isOpen}

@@ -3,7 +3,7 @@ import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 import { useAuth } from "../../contexts/AuthContext";
 import { useEffect } from "react";
 
-function EditProfileModal({ isOpen, handleCloseModal, onEditProfile }) {
+function EditProfileModal({ isOpen, onClose, onEditProfile }) {
     const { user } = useAuth();
     // Validation rules
     const validationRules = {
@@ -56,7 +56,7 @@ function EditProfileModal({ isOpen, handleCloseModal, onEditProfile }) {
         if (isValid) {
             onEditProfile(values);
             handleReset();
-            handleCloseModal();
+            onClose();
         } else {
             console.log(
                 "[EditProfileModal] Form is not valid. Errors:",
@@ -67,7 +67,7 @@ function EditProfileModal({ isOpen, handleCloseModal, onEditProfile }) {
 
     const handleModalClose = () => {
         handleReset();
-        handleCloseModal();
+        onClose();
     };
     // Pre-fill form when modal opens
     useEffect(() => {
@@ -79,6 +79,7 @@ function EditProfileModal({ isOpen, handleCloseModal, onEditProfile }) {
         }
     }, [isOpen, user, setValues]);
 
+    if (!isOpen) return null;
     return (
         <ModalWithForm
             isOpen={isOpen}
