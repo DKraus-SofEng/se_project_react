@@ -118,7 +118,7 @@
         margin: 0;
     }
     .modal__submit-btn {
-        width: 100%;
+        width: auto;
         min-width: 0;
         font-size: 1rem;
         margin-top: 24px;

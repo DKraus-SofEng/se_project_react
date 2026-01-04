@@ -1,77 +1,85 @@
 # Tripleten Software Engineering Program: Project React
 
-## WTWR (se_project_react)
+## WTWR (What to Wear)
 
-This is the WTWR (What to Wear) React.js project of the fulltime Software Engineering program at TripleTen. It is a small React + Vite app that recommends clothing based on current weather temperature of the chosen location.
-
-Fetches current weather from OpenWeather, normalizes it, and shows matching clothing cards.
-
-## Core Technologies
-
-- React 18 (with functional components and hooks)
-- JavaScript (ES6+)
-- CSS3 (with BEM methodology)
-- HTML5
-- BEM Methodology
-
-## Libraries/Tools
-
-- React Router DOM (for navigation between pages)
-- Vite (build tool and dev server)
-- React Context API (for temperature unit state management)
-
-## APIs/Backend
-
-- OpenWeather API (for real-time weather data)
-- json-server (for mock backend/database)
+This is a React + Vite app that recommends clothing based on the current weather for the user's location. It is an educational project of the fulltime Software Engineering program at TripleTen.
 
 ## Features
 
-- Fetches current weather from OpenWeather
+- Fetches real-time weather from OpenWeather API
 - Normalizes temperature (F/C) and day/night
-- Clothing cards filtered by weather type (hot/warm/cold)
+- Recommends clothing cards filtered by weather type (hot/warm/cold)
 - Temperature unit controlled via a context and a toggle switch
-- Modal form for user to add their own clothing items
+- User can add their own clothing items via a modal form
+- Responsive design for desktop and mobile
+
+## Core Technologies / Tech Stack
+
+- React 18 (functional components & hooks)
+- Vite (build tool & dev server)
+- JavaScript (ES6+)
+- CSS3 (BEM methodology)
+- React Router DOM (routing)
+- React Context API (state management)
+- HTML5
+
+## APIs / Backend
+
+- OpenWeather API (real-time weather data)
+- WTWR Express backend ([se_project_express](https://github.com/DKraus-SofEng/se_project_express))
+
+## Backend Integration
+
+This app requires the WTWR Express backend to provide user, clothing, and weather data.
+
+- By default, the frontend expects the backend at `http://localhost:3001` (update API URL in your config if needed).
+- Follow the setup instructions in the backend repo to run the backend locally.
+
+## How to Run
+
+1. Start the backend server (see backend README for details)
+2. Start the frontend:
+   - Clone the repo
+   - Install dependencies: `npm install`
+   - Start the dev server: `npm run dev`
+   - App runs at http://localhost:5173
 
 ## Known Issues
 
-### Close Button Visibility
-
-**Issue**:
-the white close button icon becomes invisible on clothing items with white/light backgrounds
-
-**Impact**:
-users may have difficulty closing the modal when viewing light-colored items
-
-**Recommended Solutions**:
-
-- Use a dark close icon (black or dark gray)
-- Add a semi-transparent background to the close button
-- Consider using an icon with both light and dark elements (e.g. a shadow)
-
 ### Clothing Weather Options
 
-**Issue**: there are only three options for clothing based solely on the weather temperature.
+**Issue**: There are only three options for clothing based solely on the weather temperature.
 
-**Impact**: user may not choose appropriate clothing for the weather conditions based on three temperature-related conditions only.
+**Impact**: User may not choose appropriate clothing for the weather conditions based on three temperature-related conditions only.
 
 **Recommended Solutions**:
 
-- To truly make the app functional, many more weather conditions, such as rain, wind, and snow would need to be added along with suggested items beyond clothing, such as an umbrella or sunscreen.
+- Add more weather conditions (rain, wind, snow, etc.) and suggest items beyond clothing (umbrella, sunscreen, etc.)
+
+### Location
+
+**Issue**: The app does not automatically detect and use the user’s location to fetch weather data. Users must manually select or enter their location.
+
+**Impact**: Weather and clothing recommendations may not be accurate or relevant unless the user sets their location each time.
+
+**Recommended Solutions**:
+
+- Integrate browser geolocation API to automatically detect the user’s location.
+- Optionally, allow users to set a default location in their profile.
+- Add a fallback or permission request if the user denies location access.
 
 ## Links
 
-**Figma**
+- **Figma**: [Design][(https://www.figma.com/design/bfVOvqlLmoKZ5lpro8WWBe/Sprint-14_-WTWR?node-id=0-1&p=f&t=AU8kFAxDCsvKCeJI-0](https://www.figma.com/design/bfVOvqlLmoKZ5lpro8WWBe/Sprint-14_-WTWR?node-id=0-1&p=f&t=AU8kFAxDCsvKCeJI-0)
 
-Project is linked to Figma at https://www.figma.com/design/bfVOvqlLmoKZ5lpro8WWBe/Sprint-14_-WTWR?node-id=0-1&p=f&t=KBr3bYw1ZOL9Z6sn-0.
+- **GitHub Pages**: [Deployed Project](https://DKraus-SofEng.github.io/se_project_react/index.html) _(Project not yet fully deployed)_
 
-**GitHub**
+- **Project Pitch Video**: [Watch here](https://www.loom.com/share/c322926d4fff4ba684481389b3af9d2a)
 
-Link to deployed project on GitHub Pages: https://DKraus-SofEng.github.io/se_project_spots/index.html. _Please note: the complete project has not yet been deployed._
+- **Backend Repo**: [se_project_express](https://github.com/DKraus-SofEng/se_project_express)
 
-**Project Pitch Video**
+## Deployment
 
-You can find the project pitch video at: https://www.loom.com/share/c322926d4fff4ba684481389b3af9d2a
-
-**Project Back End**
-https://github.com/DKraus-SofEng/se_project_express
+- Production backend API: https://api.wtwr.bot.nu
+- For local development, the frontend expects the backend at `http://localhost:3001`
+- Update the API URL in your frontend config to switch between local and production
