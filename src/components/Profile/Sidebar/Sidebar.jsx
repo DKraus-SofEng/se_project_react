@@ -1,6 +1,6 @@
 import "./Sidebar.css";
 import avatar from "../../../assets/avatar.png";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../../contexts/AuthContext.jsx";
 import { useNavigate } from "react-router-dom";
 
 function Sidebar({ handleOpenEditProfileModal }) {
@@ -17,11 +17,19 @@ function Sidebar({ handleOpenEditProfileModal }) {
         <aside className="sidebar">
             <div className="sidebar__row">
                 <p className="sidebar__userName">{user?.name || "User"}</p>
-                <img
-                    className="sidebar__avatar"
-                    src={user.avatar}
-                    alt={user?.name ? `${user.name}'s avatar` : "User avatar"}
-                />
+                {user?.avatar ? (
+                    <img
+                        className="sidebar__avatar"
+                        src={user.avatar}
+                        alt={
+                            user?.name ? `${user.name}'s avatar` : "User avatar"
+                        }
+                    />
+                ) : (
+                    <div className="avatar-placeholder">
+                        {user?.name ? user.name.charAt(0).toUpperCase() : "U"}
+                    </div>
+                )}
             </div>
             <button
                 className="sidebar__edit-profile"

@@ -1,6 +1,6 @@
 import "./ClothesSection.css";
 import ItemCard from "../../App/Main/ItemCard/ItemCard";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../../contexts/AuthContext.jsx";
 
 function ClothesSection({
     clothingItems,

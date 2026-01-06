@@ -1,7 +1,7 @@
 import "./ItemCard.css";
 import likeDefault from "../../../../assets/like-icon-default.svg";
 import likeActive from "../../../../assets/like-icon-liked.svg";
-import { useAuth } from "../../../../contexts/AuthContext";
+import { useAuth } from "../../../../contexts/AuthContext.jsx";
 
 function ItemCard({ clothingItem, onCardClick, onCardLike, isLiked }) {
     const { user } = useAuth();

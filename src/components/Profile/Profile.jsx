@@ -1,7 +1,7 @@
 // import { Link } from "react-router-dom";
 import ClothesSection from "./ClothesSection/ClothesSection";
 import Sidebar from "./Sidebar/Sidebar";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext.jsx";
 
 import "./Profile.css";
 

@@ -1,6 +1,6 @@
 import "./ItemModal.css";
 import closeIcon from "../../../assets/close-icon-white.svg";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../../contexts/AuthContext.jsx";
 
 function ItemModal({ card, isOpen, onClose, handleOpenConfirmationModal }) {
     const { user } = useAuth();

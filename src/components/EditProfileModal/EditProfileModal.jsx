@@ -1,6 +1,6 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext.jsx";
 import { useEffect } from "react";
 
 function EditProfileModal({ isOpen, onClose, onEditProfile }) {

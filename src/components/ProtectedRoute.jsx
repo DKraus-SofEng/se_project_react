@@ -1,4 +1,4 @@
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/AuthContext.jsx";
 import { Navigate, useLocation } from "react-router-dom";
 
 // "anonymous" prop is used to indicate routes that can be visited anonymously

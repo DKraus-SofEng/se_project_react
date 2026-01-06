@@ -44,6 +44,23 @@ This app requires the WTWR Express backend to provide user, clothing, and weathe
    - Start the dev server: `npm run dev`
    - App runs at http://localhost:5173
 
+## Testing
+
+This project uses **Vitest** and **React Testing Library** for unit and integration tests.
+
+- All core components (App, RegisterModal, LoginModal, Sidebar) have basic render and interaction tests.
+- API error handling and loading states are tested for Sidebar.
+- Context and router providers are mocked for isolated component tests.
+
+### How to Run Tests
+
+```
+npm run test
+```
+
+- All tests are located in the `src/tests/` folder.
+- Matchers from `@testing-library/jest-dom` are enabled for robust assertions.
+
 ## Known Issues
 
 ### Clothing Weather Options

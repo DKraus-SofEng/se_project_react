@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import logo from "../../../assets/logo.svg";
 import "./Header.css";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../../contexts/AuthContext.jsx";
 import { useState } from "react";
 import MenuModal from "../../MenuModal/MenuModal";
 

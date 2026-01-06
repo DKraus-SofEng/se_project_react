@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useCurrentTemperatureUnit } from "../../../contexts/CurrentTemperatureUnitContext";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../../contexts/AuthContext.jsx";
 
 import "./Main.css";
 import WeatherCard from "./WeatherCard/WeatherCard";

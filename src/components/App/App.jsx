@@ -26,7 +26,7 @@ import {
 import { CurrentTemperatureUnitProvider } from "../../contexts/CurrentTemperatureUnitContext.jsx";
 import Profile from "../Profile/Profile";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext.jsx";
 import EditProfileModal from "../EditProfileModal/EditProfileModal.jsx";
 import { defaultClothingItems } from "../../utils/ClothingItems.js";
 import { getUserInfo } from "../../utils/api";
