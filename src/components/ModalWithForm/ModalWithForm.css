@@ -1,5 +1,5 @@
+/* Modal overlay and container */
 .modal {
-    z-index: 1500;
 }
 
 .modal__container {

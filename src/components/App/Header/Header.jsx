@@ -108,14 +108,6 @@ function Header({
                     >
                         <span className="header__menu-icon"></span>
                     </button>
-                ) : isMobileMenuOpened ? (
-                    <button
-                        className="header__close-btn"
-                        onClick={toggleMobileMenu}
-                        aria-label="Close menu"
-                    >
-                        &times;
-                    </button>
                 ) : null}
                 {/* Desktop layout: left and right sides */}
                 <div className="header__side header__side--desktop">
@@ -175,6 +167,7 @@ function Header({
                     onLogout={handleLogout}
                     onAddClothes={handleAddGarmentAndCloseMenu}
                     onChangeProfile={handleEditProfileAndCloseMenu}
+                    menuPosition={user ? "default" : "high"} // <-- pass prop for placement
                 />
             </header>
         </>

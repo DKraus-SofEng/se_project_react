@@ -11,11 +11,16 @@ const MenuModal = ({
     onLogout,
     onAddClothes,
     onChangeProfile,
+    menuPosition = "default", // <-- new prop
 }) => {
     if (!isOpen) return null;
 
+    // Choose style based on menuPosition
+    const modalClass =
+        menuPosition === "high" ? "menu-modal menu-modal_high" : "menu-modal";
+
     return (
-        <div className="menu-modal">
+        <div className={modalClass}>
             <button className="menu-modal__close" onClick={onClose}>
                 &times;
             </button>
