@@ -4,7 +4,7 @@
 // This component wraps our entire app and provides authentication state
 // and functions to all child components via Context API
 import React, { useState, useEffect } from "react";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "./AuthContext.jsx";
 import { BASE_URL } from "../utils/config";
 
 export const AuthProvider = ({ children }) => {

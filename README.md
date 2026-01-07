@@ -89,7 +89,8 @@ npm run test
 
 - **Figma**: [Design][(https://www.figma.com/design/bfVOvqlLmoKZ5lpro8WWBe/Sprint-14_-WTWR?node-id=0-1&p=f&t=AU8kFAxDCsvKCeJI-0](https://www.figma.com/design/bfVOvqlLmoKZ5lpro8WWBe/Sprint-14_-WTWR?node-id=0-1&p=f&t=AU8kFAxDCsvKCeJI-0)
 
-- **GitHub Pages**: [Deployed Project](https://DKraus-SofEng.github.io/se_project_react/index.html) _(Project not yet fully deployed)_
+- **GitHub Pages**: [Deployed Project](https://DKraus-SofEng.github.io/se_project_react/index.html)
+- **Custom Domain**: [wtwr.bot.nu](https://wtwr.bot.nu/)
 
 - **Project Pitch Video**: [Watch here](https://www.loom.com/share/c322926d4fff4ba684481389b3af9d2a)
 
