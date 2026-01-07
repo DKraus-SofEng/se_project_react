@@ -203,8 +203,31 @@ function App() {
                 return getWeatherData(fallbackCoords);
             })
             .then((data) => {
-                console.log("🌤️ Weather data received for:", data.location);
-                setWeatherData(data);
+                // Transform weather data for WeatherCard
+                const transformed = {
+                    temp: {
+                        F: Math.round(data.main.temp),
+                        C: Math.round(((data.main.temp - 32) * 5) / 9),
+                    },
+                    location: data.name,
+                    timestamp: data.dt,
+                    isDay:
+                        data.dt > data.sys.sunrise && data.dt < data.sys.sunset,
+                    timeOfDay:
+                        data.dt > data.sys.sunrise && data.dt < data.sys.sunset
+                            ? "day"
+                            : "night",
+                    weather:
+                        data.weather && data.weather[0]
+                            ? data.weather[0].main
+                            : "",
+                    icon:
+                        data.weather && data.weather[0]
+                            ? data.weather[0].icon
+                            : "",
+                };
+                console.log("[App] Transformed weatherData:", transformed);
+                setWeatherData(transformed);
             })
             .catch((weatherError) => {
                 console.error("Failed to get weather data:", weatherError);
@@ -217,7 +240,7 @@ function App() {
                 setClothingItems([...dbItems, ...defaultClothingItems]);
             })
             .catch(console.error);
-    }, [user]);
+    }, []);
 
     return (
         <CurrentTemperatureUnitProvider>

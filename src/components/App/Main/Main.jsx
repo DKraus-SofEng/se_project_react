@@ -16,18 +16,24 @@ function Main({
     const { currentTempUnit = "F" } = useCurrentTemperatureUnit();
     const { user } = useAuth();
 
+    console.log("[Main] weatherData:", weatherData);
+    console.log("[Main] clothingItems:", clothingItems);
+
     const tempToShow =
         weatherData?.temp?.[currentTempUnit] ?? weatherData?.temp ?? "0";
 
     const weatherCondition = getWeatherCondition(weatherData.temp.F);
+    console.log("[Main] weatherCondition:", weatherCondition);
 
     const itemsToShow = useMemo(() => {
         if (!weatherCondition) return clothingItems;
-        return clothingItems.filter(
+        const filtered = clothingItems.filter(
             (item) =>
                 (item.weather || "").toLowerCase() ===
                 weatherCondition.toLowerCase()
         );
+        console.log("[Main] itemsToShow (filtered):", filtered);
+        return filtered;
     }, [clothingItems, weatherCondition]);
 
     const isItemLiked = (item) =>
