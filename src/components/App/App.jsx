@@ -195,6 +195,16 @@ function App() {
                 return getWeatherData(fallbackCoords);
             })
             .then((data) => {
+                // If data is already transformed, just set it
+                if (data && data.temp && data.location) {
+                    setWeatherData(data);
+                    return;
+                }
+                // Otherwise, transform the raw API response
+                if (!data || !data.main || typeof data.main.temp !== "number") {
+                    console.error("Weather API returned invalid data:", data);
+                    return;
+                }
                 const transformed = {
                     temp: {
                         F: Math.round(data.main.temp),
