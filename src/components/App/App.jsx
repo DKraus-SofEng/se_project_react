@@ -203,7 +203,22 @@ function App() {
                 return getWeatherData(fallbackCoords);
             })
             .then((data) => {
-                // Validate weather API response
+                // Log the full weather API response for debugging
+                console.log("[App] Raw weather API response:", data);
+                // Handle OpenWeather error responses (e.g., { cod: 401, message: "Invalid API key" })
+                if (data && data.cod && data.cod !== 200) {
+                    console.error("Weather API error:", data.cod, data.message);
+                    setWeatherData({
+                        temp: { F: 0, C: 0 },
+                        location: data.message || "",
+                        timestamp: 0,
+                        isDay: true,
+                        timeOfDay: "day",
+                        weather: "",
+                        icon: "",
+                    });
+                    return;
+                }
                 if (
                     !data ||
                     !data.main ||
