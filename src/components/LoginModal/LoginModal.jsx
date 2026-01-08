@@ -1,10 +1,9 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
-import { Link } from "react-router-dom";
 import "./LoginModal.css";
 import { useEffect, useState, useRef } from "react";
 
-function LoginModal({ isOpen, onClose, onLogin }) {
+function LoginModal({ isOpen, onClose, onLogin, handleOpenRegisterModal }) {
     // Validation rules
     const validationRules = {
         email: {
@@ -109,9 +108,13 @@ function LoginModal({ isOpen, onClose, onLogin }) {
             isValid={isValid}
             extraContent={
                 <div className="modal__extra">
-                    <Link to="register" className="modal__extra-link">
+                    <button
+                        type="button"
+                        className="modal__extra-link"
+                        onClick={handleOpenRegisterModal}
+                    >
                         or Sign Up
-                    </Link>
+                    </button>
                 </div>
             }
         >

@@ -188,59 +188,13 @@ function App() {
         // First try to get user's current location
         getCurrentPosition()
             .then((coordinates) => {
-                console.log(
-                    "✅ Geolocation SUCCESS - Using user location:",
-                    coordinates
-                );
                 return getWeatherData(coordinates);
             })
-            .catch((locationError) => {
-                console.warn("❌ Geolocation FAILED:", locationError.message);
-                console.log("🔄 Using fallback coordinates (Denver)");
-                // If geolocation fails, use fallback coordinates
+            .catch(() => {
                 const fallbackCoords = getFallbackCoordinates();
-                console.log("📍 Fallback coordinates:", fallbackCoords);
                 return getWeatherData(fallbackCoords);
             })
             .then((data) => {
-                // Log the full weather API response for debugging
-                console.log("[App] Raw weather API response:", data);
-                // Handle OpenWeather error responses (e.g., { cod: 401, message: "Invalid API key" })
-                if (data && data.cod && data.cod !== 200) {
-                    console.error("Weather API error:", data.cod, data.message);
-                    setWeatherData({
-                        temp: { F: 0, C: 0 },
-                        location: data.message || "",
-                        timestamp: 0,
-                        isDay: true,
-                        timeOfDay: "day",
-                        weather: "",
-                        icon: "",
-                    });
-                    return;
-                }
-                if (
-                    !data ||
-                    !data.main ||
-                    typeof data.main.temp !== "number" ||
-                    !data.dt ||
-                    !data.sys ||
-                    typeof data.sys.sunrise !== "number" ||
-                    typeof data.sys.sunset !== "number"
-                ) {
-                    console.error("Weather API returned invalid data:", data);
-                    setWeatherData({
-                        temp: { F: 0, C: 0 },
-                        location: "",
-                        timestamp: 0,
-                        isDay: true,
-                        timeOfDay: "day",
-                        weather: "",
-                        icon: "",
-                    });
-                    return;
-                }
-                // Transform weather data for WeatherCard
                 const transformed = {
                     temp: {
                         F: Math.round(data.main.temp),
@@ -263,20 +217,10 @@ function App() {
                             ? data.weather[0].icon
                             : "",
                 };
-                console.log("[App] Transformed weatherData:", transformed);
                 setWeatherData(transformed);
             })
             .catch((weatherError) => {
                 console.error("Failed to get weather data:", weatherError);
-                setWeatherData({
-                    temp: { F: 0, C: 0 },
-                    location: "",
-                    timestamp: 0,
-                    isDay: true,
-                    timeOfDay: "day",
-                    weather: "",
-                    icon: "",
-                });
             });
     }, []);
 
@@ -345,6 +289,7 @@ function App() {
                     isOpen={activeModal === "login-modal"}
                     onClose={handleModalClose}
                     onLogin={handleLogin}
+                    handleOpenRegisterModal={handleOpenRegisterModal}
                 />
                 <ItemModal
                     card={selectedCard}
