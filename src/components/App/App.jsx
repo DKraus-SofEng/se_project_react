@@ -203,6 +203,28 @@ function App() {
                 return getWeatherData(fallbackCoords);
             })
             .then((data) => {
+                // Validate weather API response
+                if (
+                    !data ||
+                    !data.main ||
+                    typeof data.main.temp !== "number" ||
+                    !data.dt ||
+                    !data.sys ||
+                    typeof data.sys.sunrise !== "number" ||
+                    typeof data.sys.sunset !== "number"
+                ) {
+                    console.error("Weather API returned invalid data:", data);
+                    setWeatherData({
+                        temp: { F: 0, C: 0 },
+                        location: "",
+                        timestamp: 0,
+                        isDay: true,
+                        timeOfDay: "day",
+                        weather: "",
+                        icon: "",
+                    });
+                    return;
+                }
                 // Transform weather data for WeatherCard
                 const transformed = {
                     temp: {
@@ -231,6 +253,15 @@ function App() {
             })
             .catch((weatherError) => {
                 console.error("Failed to get weather data:", weatherError);
+                setWeatherData({
+                    temp: { F: 0, C: 0 },
+                    location: "",
+                    timestamp: 0,
+                    isDay: true,
+                    timeOfDay: "day",
+                    weather: "",
+                    icon: "",
+                });
             });
     }, []);
 
